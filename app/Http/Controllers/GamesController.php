@@ -23,8 +23,12 @@ class GamesController extends Controller
 
     public function showGames($id)
     {
-        $game = Games::query()->where('id', $id)->get();
-        return Response()->view('game.detail', ['game' => $game, 'pageTitle' => $game[0]['judul']]);
+        if (!is_null(Games::find($id))) {
+            $game = Games::query()->where('id', $id)->get();
+            return Response()->view('game.detail', ['game' => $game, 'pageTitle' => $game[0]['judul']]);
+        }
+
+        return redirect('/game');
     }
 
     /**
